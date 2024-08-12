@@ -1,33 +1,21 @@
-name: Deploy AKS Cluster
+resource "azurerm_resource_group" "aks" {
+  name     = "aks-resource-group"
+  location = "East US"
+}
 
-on:
-  push:
-    branches:
-      - main
+resource "azurerm_kubernetes_cluster" "aks" {
+  name                = "my-aks-cluster"
+  location            = azurerm_resource_group.aks.location
+  resource_group_name = azurerm_resource_group.aks.name
+  dns_prefix          = "myaks"
 
-jobs:
-  terraform:
-    runs-on: ubuntu-latest
+  default_node_pool {
+    name       = "default"
+    node_count = 1
+    vm_size    = "Standard_DS2_v2"
+  }
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.0  # Specify the Terraform version
-
-    - name: Azure Login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Initialize Terraform
-      run: terraform init
-
-    - name: Terraform Plan
-      run: terraform plan
-
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+  identity {
+    type = "SystemAssigned"
+  }
+}
