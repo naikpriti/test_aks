@@ -37,6 +37,7 @@ Save the secret.
 
 
 **AKS**
+
 az login
 
 az account set --subscription subscription_id
@@ -44,10 +45,14 @@ az account set --subscription subscription_id
 az aks get-credentials --resource-group  resource_group_name --name cluster_name
 
 **EKS**
+
 Step 1: Install AWS CLI
+
 Step 2: Install kubectl
+
 Step 3: Configure AWS CLI
 aws configure
+
 aws eks --region <your-region> update-kubeconfig --name <your-cluster-name>
 
 
