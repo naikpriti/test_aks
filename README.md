@@ -1,4 +1,4 @@
-Step 1: Create an Azure Service Principal
+![image](https://github.com/user-attachments/assets/f7bb07fa-7222-41d5-8938-2677a6aed58c)Step 1: Create an Azure Service Principal
 First, create a Service Principal in Azure that your GitHub Actions workflow will use to authenticate. You can do this using the Azure CLI:
 
 bash
@@ -34,3 +34,21 @@ Click New repository secret.
 Name the secret AZURE_CREDENTIALS.
 Paste the JSON output into the secret value field.
 Save the secret.
+
+
+**AKS**
+az login
+
+az account set --subscription subscription_id
+
+az aks get-credentials --resource-group  resource_group_name --name cluster_name
+
+**EKS**
+Step 1: Install AWS CLI
+Step 2: Install kubectl
+Step 3: Configure AWS CLI
+aws configure
+aws eks --region <your-region> update-kubeconfig --name <your-cluster-name>
+
+
+
